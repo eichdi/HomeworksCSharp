@@ -6,22 +6,42 @@ using System.Threading.Tasks;
 
 namespace StudentsCards
 {
+    class Turnstile
+    {
+        private BaseCards cards;
+        public Turnstile(BaseCards cards)
+        {
+            this.cards = cards;
+        }
+        public bool check(Card card)
+        {
+            return cards.check(card);
+        }
+    }
     class BuildingKFU
     {
         private string name;
         private string address;
-        private BaseCards cards;
-        public BuildingKFU(BaseCards cards, string name, string address)
+        Turnstile[] tur;
+        public BuildingKFU(Turnstile[] tur, string name, string address)
         {
-            this.cards = cards;
+            this.tur = tur;
             this.name = name;
             this.address = address;
 
         }
         public bool check(Card card)
         {
-            return cards.check(card);
+            for (int i = 0; i < tur.Length; i++)
+            {
+                if (tur[i].check(card))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
+
     }
     class BaseCards
     {
