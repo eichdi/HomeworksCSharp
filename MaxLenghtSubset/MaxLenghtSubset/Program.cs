@@ -13,21 +13,30 @@ namespace MaxLenghtSubset
         {
             StreamReader a = new StreamReader("input.txt");
             StreamWriter b = new StreamWriter("output.txt");
-
-
             int lenght = int.Parse(a.ReadLine());
-            string o = a.ReadToEnd();
-            int num;
-
-
-            for(int i=1;i<=o.Length;i++)
+            string[] num= a.ReadLine().Split();
+            int result=0;
+            int max=0;
+            int pred=int.MinValue;
+            for (int i = 0; i < lenght; i++)
             {
-                if (!(o[i] == ' '))
+                if (pred < int.Parse(num[i]))
                 {
-                    num = int.Parse(o.Substring(0, 1)) * i;
-                    o = o.Substring(0, 1);
+                    max++;
                 }
+                else
+                {
+                    if (max > result)
+                    {
+                        result = max;
+                    }
+                    max=0;
+                }
+                pred = int.Parse(num[i]);
             }
+
+            b.Write(result);
+          
 
         }
     }
