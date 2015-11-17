@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<people>
+<people id="0">
+  <fio>Иванов Иван Иоанович</fio>
+  <address>1a</address>
+  <ntel>+79158897566</ntel>
+  <sex>м</sex>
+  <dataro>01.05.1963</dataro>
+  <mextoro>Казань</mextoro>
+</people>  
+<people id="1">
+  <fio>Максимов Макс Максимович</fio>
+  <address>2б</address>
+  <ntel>+79568897566</ntel>
+  <sex>ж</sex>
+  <dataro>31.05.1993</dataro>
+  <mextoro>Москва</mextoro>
+</people>  
+  </people>
