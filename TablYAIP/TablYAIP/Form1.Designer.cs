@@ -79,8 +79,11 @@
             this.TablPeople.Location = new System.Drawing.Point(1, 3);
             this.TablPeople.Name = "TablPeople";
             this.TablPeople.ReadOnly = true;
+            this.TablPeople.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.TablPeople.RowHeadersWidth = 20;
             this.TablPeople.Size = new System.Drawing.Size(580, 222);
             this.TablPeople.TabIndex = 0;
+            this.TablPeople.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablPeople_RowEnter);
             // 
             // add
             // 
@@ -134,6 +137,7 @@
             this.DeleteID.Size = new System.Drawing.Size(185, 20);
             this.DeleteID.TabIndex = 4;
             this.DeleteID.Visible = false;
+            this.DeleteID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DeleteID_KeyPress);
             // 
             // DeleteLabel
             // 
@@ -318,6 +322,7 @@
             this.IdEdit.Size = new System.Drawing.Size(139, 20);
             this.IdEdit.TabIndex = 13;
             this.IdEdit.Tag = "";
+            this.IdEdit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IdEdit_KeyPress);
             // 
             // EAddADDRESS
             // 

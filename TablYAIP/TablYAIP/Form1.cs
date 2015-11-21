@@ -13,8 +13,25 @@ namespace TablYAIP
 {
     public partial class Form1 : Form
     {
+        int thisid = 0;
         string path = "people.xml";
         int idcounter;
+        public bool IsNat(string a)
+        {
+            if (a.Length != 0)
+            {
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (!(a[i] >= '0' && a[i] <= '9'))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+                return false;
+        }
         public int GetID
         {
             get
@@ -113,6 +130,7 @@ namespace TablYAIP
                     //добавляем новую запись в таблицу
                     dt.Rows.Add(newRow);
                 }
+                
             }
 
             catch (Exception ex)
@@ -162,8 +180,6 @@ namespace TablYAIP
 
         }
 
-        
-
         private void edit_Click(object sender, EventArgs e)
         {
             MainBox.Visible = false;
@@ -185,7 +201,17 @@ namespace TablYAIP
             {
                 int i;
                 bool idnotfound = true;
-                int id = int.Parse(DeleteID.Text.ToString());
+                int id=0;
+                if (IsNat(DeleteID.Text.ToString()))
+                {
+                    id = int.Parse(DeleteID.Text.ToString());
+                }
+                else
+                {
+                    DeleteID.Text = "";
+                    MessageBox.Show("Введите корректный id");
+                    return;
+                }
                 DataTable dt = ReadXml();
                 DataRow[] rows = dt.Select();
                 for (i = 0; i < rows.Length; i++)
@@ -200,7 +226,9 @@ namespace TablYAIP
                 TablPeople.DataSource = ReadXml();
                 if (idnotfound)
                 {
+                    DeleteID.Text = "";
                     MessageBox.Show("Строки с таким id не существует");
+                    return;
                 }
                 else
                 {
@@ -218,7 +246,17 @@ namespace TablYAIP
 
             int i;
             bool idnotfound = true;
-            int id = int.Parse(IdEdit.Text.ToString());
+            int id = 0;
+            if (IsNat(IdEdit.Text.ToString()))
+            {
+                id = int.Parse((IdEdit.Text.ToString()));
+            }
+            else
+            {
+                IdEdit.Text = "";
+                MessageBox.Show("Введите корректный id");
+                return;
+            }
             DataTable dt = ReadXml();
             DataRow[] rows = dt.Select();
             for (i = 0; i < rows.Length; i++)
@@ -245,7 +283,18 @@ namespace TablYAIP
         {
             int i;
             bool idnotfound = true;
-            int id = int.Parse(IdEdit.Text.ToString());
+            int id = 0;
+            if (IsNat(IdEdit.Text.ToString()))
+            {
+                id = int.Parse((IdEdit.Text.ToString()));
+            }
+            else
+            {
+                IdEdit.Text = "";
+                MessageBox.Show("Введите корректный id");
+                return;
+            }
+            IdEdit.Text = "";
             DataTable dt = ReadXml();
             DataRow[] rows = dt.Select();
             for (i = 0; i < rows.Length; i++)
@@ -292,6 +341,23 @@ namespace TablYAIP
                 AddBox.Visible = false;
                 MainBox.Visible = true;
             }
+        }
+
+        private void DeleteID_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if((char) Keys.Enter == e.KeyChar)
+                delete_Click(sender, e);
+        }
+
+        private void IdEdit_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((char)Keys.Enter == e.KeyChar)
+                SearchID_Click(sender, e);
+        }
+
+        private void TablPeople_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            thisid = e.RowIndex;
         }
     }
 }
