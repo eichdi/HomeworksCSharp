@@ -15,7 +15,8 @@ namespace TablYAIP
     {
         int thisid = 0;
         string path = "people.xml";
-        int idcounter;
+        bool isedit=false;
+
         public bool IsNat(string a)
         {
             if (a.Length != 0)
@@ -32,19 +33,11 @@ namespace TablYAIP
             else
                 return false;
         }
-        public int GetID
-        {
-            get
-            {
-                idcounter++;
-                return idcounter;
-            }
-        }
+
         public Form1()
         {
             InitializeComponent();
-            EditBox.Visible = false;
-            AddBox.Visible = false;
+            Box.Visible = false;
             MainBox.Visible = true;
             //DataTable dt = (DataTable)TablPeople.DataSource;
             TablPeople.DataSource = ReadXml();
@@ -55,7 +48,6 @@ namespace TablYAIP
             DataTable dt = new DataTable("People");
 
             //создаём колонки
-            DataColumn colID = new DataColumn("id", typeof(Int32));
             DataColumn colFIO = new DataColumn("fio", typeof(String));
             DataColumn colADR = new DataColumn("address", typeof(String));
             DataColumn colNTEL = new DataColumn("ntel", typeof(String));
@@ -64,7 +56,6 @@ namespace TablYAIP
             DataColumn colMESTORO = new DataColumn("mestoro", typeof(String));
 
             //добавляем колонки в таблицу
-            dt.Columns.Add(colID);
             dt.Columns.Add(colFIO);
             dt.Columns.Add(colADR);
             dt.Columns.Add(colNTEL);
@@ -78,7 +69,6 @@ namespace TablYAIP
         private DataTable ReadXml()
         {
             DataTable dt = null;
-            idcounter = -1;
             try
             {
                 //загружаем xml файл
@@ -96,8 +86,6 @@ namespace TablYAIP
                     newRow = dt.NewRow();
                
                     //получаем значение атрибута
-                    newRow["id"] = GetID;
-                    
                     //проверяем наличие xml элемента name
                     if (elm.Element("fio") != null)
                     {
@@ -145,17 +133,21 @@ namespace TablYAIP
         private void add_Click(object sender, EventArgs e)
         {
             MainBox.Visible = false;
-            AddBox.Visible = true;
+            Box.Visible = true;
         }
 
         private void send_Click(object sender, EventArgs e)
         {
             //get data on xml file
-            DataTable dt = ReadXml();
+            DataTable dt = (DataTable)TablPeople.DataSource;
             //add new row
+            if (isedit)
+            {
+                dt.Rows.RemoveAt(thisid);
+                isedit = false;
+            }
             DataRow addRow = dt.NewRow();
 
-            addRow["id"] = GetID;
             addRow["fio"] = AddFIO.Text;
             addRow["address"] = AddADDRESS.Text;
             addRow["ntel"] = AddNTEL.Text;
@@ -174,185 +166,42 @@ namespace TablYAIP
             AddSEX.Text = "";
             AddDATARO.Text = "";
             AddMESTORO.Text = "";
-            EditBox.Visible = false;
-            AddBox.Visible = false;
+            Box.Visible = false;
             MainBox.Visible = true;
 
         }
 
         private void edit_Click(object sender, EventArgs e)
         {
-            MainBox.Visible = false;
-            EditBox.Visible = true;
+            
+            //Дописать
+            DataTable dt = (DataTable) TablPeople.DataSource;
+            AddFIO.Text = TablPeople[0,thisid].Value.ToString();
+            AddADDRESS.Text = TablPeople[1, thisid].Value.ToString();
+            AddNTEL.Text = TablPeople[2, thisid].Value.ToString();
+            AddSEX.Text = TablPeople[3, thisid].Value.ToString();
+            AddDATARO.Text = TablPeople[4, thisid].Value.ToString();
+            AddMESTORO.Text = TablPeople[5, thisid].Value.ToString();
+            isedit = true;
+            add_Click(sender, e);
+            
 
         }
-
 
         private void delete_Click(object sender, EventArgs e)
         {
-            if (DeleteLabel.Visible == false && DeleteID.Visible == false)
-            {
-                DeleteLabel.Visible=true;
-                DeleteID.Visible = true;
-                add.Visible = false;
-                edit.Visible = false;
-            }
-            else
-            {
-                int i;
-                bool idnotfound = true;
-                int id=0;
-                if (IsNat(DeleteID.Text.ToString()))
-                {
-                    id = int.Parse(DeleteID.Text.ToString());
-                }
-                else
-                {
-                    DeleteID.Text = "";
-                    MessageBox.Show("Введите корректный id");
-                    return;
-                }
-                DataTable dt = ReadXml();
-                DataRow[] rows = dt.Select();
-                for (i = 0; i < rows.Length; i++)
-                {
-                    if (id == int.Parse(rows[i][0].ToString()))
-                    {
-                        idnotfound = false;
-                        rows[i].Delete();
-                    }
-                }
-                dt.WriteXml(path);
-                TablPeople.DataSource = ReadXml();
-                if (idnotfound)
-                {
-                    DeleteID.Text = "";
-                    MessageBox.Show("Строки с таким id не существует");
-                    return;
-                }
-                else
-                {
-                    DeleteLabel.Visible = false;
-                    DeleteID.Visible = false;
-                    add.Visible = true;
-                    edit.Visible = true;
-                }
-            }
-            
-        }
-        
-        private void SearchID_Click(object sender, EventArgs e)
-        {
-
-            int i;
-            bool idnotfound = true;
-            int id = 0;
-            if (IsNat(IdEdit.Text.ToString()))
-            {
-                id = int.Parse((IdEdit.Text.ToString()));
-            }
-            else
-            {
-                IdEdit.Text = "";
-                MessageBox.Show("Введите корректный id");
-                return;
-            }
-            DataTable dt = ReadXml();
-            DataRow[] rows = dt.Select();
-            for (i = 0; i < rows.Length; i++)
-            {
-                if (id == int.Parse(rows[i][0].ToString()))
-                {
-                    idnotfound = false;
-                    EAddFIO.Text = rows[i]["fio"].ToString();
-                    EAddADDRESS.Text = rows[i]["address"].ToString();
-                    EAddNTEL.Text = rows[i]["ntel"].ToString();
-                    EAddSEX.Text = rows[i]["sex"].ToString();
-                    EAddDATARO.Text = rows[i]["dataro"].ToString();
-                    EAddMESTORO.Text = rows[i]["mestoro"].ToString();
-                }
-            }
-            if (idnotfound)
-            {
-                MessageBox.Show("Строки с таким id не существует");
-            }
-            //rows[i].Delete();
-        }
-
-        private void ESend_Click(object sender, EventArgs e)
-        {
-            int i;
-            bool idnotfound = true;
-            int id = 0;
-            if (IsNat(IdEdit.Text.ToString()))
-            {
-                id = int.Parse((IdEdit.Text.ToString()));
-            }
-            else
-            {
-                IdEdit.Text = "";
-                MessageBox.Show("Введите корректный id");
-                return;
-            }
-            IdEdit.Text = "";
-            DataTable dt = ReadXml();
-            DataRow[] rows = dt.Select();
-            for (i = 0; i < rows.Length; i++)
-            {
-                if (id == int.Parse(rows[i][0].ToString()))
-                {
-                    idnotfound = false;
-                    rows[i].Delete();
-                    break;
-                }
-            }
-            if (idnotfound)
-            {
-                MessageBox.Show("Строки с таким id не существует");
-            }
-            else
-            {
-                TablPeople.DataSource = dt;
-                dt.WriteXml(path);
-                dt = ReadXml();
-                DataRow EaddRow = dt.NewRow();
-
-                EaddRow["id"] = GetID;
-                EaddRow["fio"] = EAddFIO.Text;
-                EaddRow["address"] = EAddADDRESS.Text;
-                EaddRow["ntel"] = EAddNTEL.Text;
-                EaddRow["sex"] = EAddSEX.Text;
-                EaddRow["dataro"] = EAddDATARO.Text;
-                EaddRow["mestoro"] = EAddMESTORO.Text;
-
-                dt.Rows.Add(EaddRow);
-
-                dt.WriteXml("people.xml");
-
-                TablPeople.DataSource = dt;
-                EAddFIO.Text = "";
-                EAddADDRESS.Text = "";
-                EAddNTEL.Text = "";
-                EAddSEX.Text = "";
-                EAddDATARO.Text = "";
-                EAddMESTORO.Text = "";
-
-                EditBox.Visible = false;
-                AddBox.Visible = false;
-                MainBox.Visible = true;
-            }
+            TablPeople.Refresh();
+            DataTable dt = (DataTable)TablPeople.DataSource;
+            dt.Rows.RemoveAt(thisid);
+            dt.WriteXml(path);
+            TablPeople.DataSource = dt;
+            TablPeople.Refresh();
         }
 
         private void DeleteID_KeyPress(object sender, KeyPressEventArgs e)
         {
             if((char) Keys.Enter == e.KeyChar)
                 delete_Click(sender, e);
-        }
-
-        private void IdEdit_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if ((char)Keys.Enter == e.KeyChar)
-                SearchID_Click(sender, e);
         }
 
         private void TablPeople_RowEnter(object sender, DataGridViewCellEventArgs e)
