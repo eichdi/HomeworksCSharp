@@ -16,6 +16,8 @@ namespace TablYAIP
         int thisid = 0;
         string path = "people.xml";
         bool isedit=false;
+        bool enterrow = false;
+
 
         public bool IsNat(string a)
         {
@@ -41,7 +43,9 @@ namespace TablYAIP
             MainBox.Visible = true;
             //DataTable dt = (DataTable)TablPeople.DataSource;
             TablPeople.DataSource = ReadXml();
+            enterrow = false;
         }
+
         private DataTable CreateTable()
         {
             //создаём таблицу
@@ -132,9 +136,12 @@ namespace TablYAIP
 
         private void add_Click(object sender, EventArgs e)
         {
-            MainBox.Visible = false;
-            Box.Visible = true;
-        }
+            
+                MainBox.Visible = false;
+                Box.Visible = true;
+            
+            
+            }
 
         private void send_Click(object sender, EventArgs e)
         {
@@ -168,6 +175,7 @@ namespace TablYAIP
             AddMESTORO.Text = "";
             Box.Visible = false;
             MainBox.Visible = true;
+            enterrow = false;
 
         }
 
@@ -175,27 +183,40 @@ namespace TablYAIP
         {
             
             //Дописать
-            DataTable dt = (DataTable) TablPeople.DataSource;
-            AddFIO.Text = TablPeople[0,thisid].Value.ToString();
-            AddADDRESS.Text = TablPeople[1, thisid].Value.ToString();
-            AddNTEL.Text = TablPeople[2, thisid].Value.ToString();
-            AddSEX.Text = TablPeople[3, thisid].Value.ToString();
-            AddDATARO.Text = TablPeople[4, thisid].Value.ToString();
-            AddMESTORO.Text = TablPeople[5, thisid].Value.ToString();
-            isedit = true;
-            add_Click(sender, e);
+            if (enterrow)
+            {
+                DataTable dt = (DataTable)TablPeople.DataSource;
+                AddFIO.Text = TablPeople[0, thisid].Value.ToString();
+                AddADDRESS.Text = TablPeople[1, thisid].Value.ToString();
+                AddNTEL.Text = TablPeople[2, thisid].Value.ToString();
+                AddSEX.Text = TablPeople[3, thisid].Value.ToString();
+                AddDATARO.Text = TablPeople[4, thisid].Value.ToString();
+                AddMESTORO.Text = TablPeople[5, thisid].Value.ToString();
+                isedit = true;
+                add_Click(sender, e);
+            }
+            else
+                MessageBox.Show("Select row");
+
             
 
         }
 
         private void delete_Click(object sender, EventArgs e)
         {
-            TablPeople.Refresh();
-            DataTable dt = (DataTable)TablPeople.DataSource;
-            dt.Rows.RemoveAt(thisid);
-            dt.WriteXml(path);
-            TablPeople.DataSource = dt;
-            TablPeople.Refresh();
+            if (enterrow)
+            {
+                TablPeople.Refresh();
+                DataTable dt = (DataTable)TablPeople.DataSource;
+                dt.Rows.RemoveAt(thisid);
+                dt.WriteXml(path);
+                TablPeople.DataSource = dt;
+                TablPeople.Refresh();
+                enterrow = false;
+            }
+            else
+                MessageBox.Show("Select row");
+
         }
 
         private void DeleteID_KeyPress(object sender, KeyPressEventArgs e)
@@ -206,7 +227,24 @@ namespace TablYAIP
 
         private void TablPeople_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            
             thisid = e.RowIndex;
+            enterrow = true;
         }
+
+        private void cancel_Click(object sender, EventArgs e)
+        {
+            AddFIO.Text = "";
+            AddADDRESS.Text = "";
+            AddNTEL.Text = "";
+            AddSEX.Text = "";
+            AddDATARO.Text = "";
+            AddMESTORO.Text = "";
+            Box.Visible = false;
+            MainBox.Visible = true;
+            enterrow = false;
+        }
+
+        
     }
 }

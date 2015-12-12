@@ -12,21 +12,21 @@ int main(){
 		cin >> num[i];
 	}
 	//Cleaning massive
-	bool* clear = new bool[lenght];
-	for (int i = 0; i < lenght; i++)
-	{
-		if (!clear[i])
-		{
-			for (int j = i + 1; j < lenght; j++)
-			{
-				if (num[i] == num[j])
-				{
-					clear[j] = true;
-				}
-			}
-		}
-	}
-	//
+	//bool* clear = new bool[lenght];
+	//for (int i = 0; i < lenght; i++)
+	//{
+	//	if (!clear[i])
+	//	{
+	//		for (int j = i + 1; j < lenght; j++)
+	//		{
+	//			if (num[i] == num[j])
+	//			{
+	//				clear[j] = true;
+	//			}
+	//		}
+	//	}
+	//}
+	////
 	int* l = new int[lenght];
 	for (int i = 0; i < lenght; i++)
 	{

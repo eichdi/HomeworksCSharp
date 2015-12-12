@@ -33,13 +33,10 @@
             this.edit = new System.Windows.Forms.Button();
             this.delete = new System.Windows.Forms.Button();
             this.MainBox = new System.Windows.Forms.GroupBox();
-            this.DeleteID = new System.Windows.Forms.TextBox();
-            this.DeleteLabel = new System.Windows.Forms.Label();
             this.Box = new System.Windows.Forms.GroupBox();
+            this.cancel = new System.Windows.Forms.Button();
             this.AddADDRESS = new System.Windows.Forms.TextBox();
             this.AddNTEL = new System.Windows.Forms.TextBox();
-            this.AddSEX = new System.Windows.Forms.TextBox();
-            this.AddDATARO = new System.Windows.Forms.TextBox();
             this.AddMESTORO = new System.Windows.Forms.TextBox();
             this.AddFIO = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -49,6 +46,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.send = new System.Windows.Forms.Button();
+            this.AddDATARO = new System.Windows.Forms.DateTimePicker();
+            this.AddSEX = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.TablPeople)).BeginInit();
             this.MainBox.SuspendLayout();
             this.Box.SuspendLayout();
@@ -100,9 +99,7 @@
             // 
             // MainBox
             // 
-            this.MainBox.Controls.Add(this.DeleteID);
             this.MainBox.Controls.Add(this.delete);
-            this.MainBox.Controls.Add(this.DeleteLabel);
             this.MainBox.Controls.Add(this.edit);
             this.MainBox.Controls.Add(this.add);
             this.MainBox.Controls.Add(this.TablPeople);
@@ -113,31 +110,13 @@
             this.MainBox.TabStop = false;
             this.MainBox.Text = "groupBox1";
             // 
-            // DeleteID
-            // 
-            this.DeleteID.Location = new System.Drawing.Point(395, 283);
-            this.DeleteID.Name = "DeleteID";
-            this.DeleteID.Size = new System.Drawing.Size(185, 20);
-            this.DeleteID.TabIndex = 4;
-            this.DeleteID.Visible = false;
-            this.DeleteID.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DeleteID_KeyPress);
-            // 
-            // DeleteLabel
-            // 
-            this.DeleteLabel.AutoSize = true;
-            this.DeleteLabel.Location = new System.Drawing.Point(123, 286);
-            this.DeleteLabel.Name = "DeleteLabel";
-            this.DeleteLabel.Size = new System.Drawing.Size(248, 13);
-            this.DeleteLabel.TabIndex = 5;
-            this.DeleteLabel.Text = "Введитe id человека которого желаете удалить";
-            this.DeleteLabel.Visible = false;
-            // 
             // Box
             // 
-            this.Box.Controls.Add(this.AddADDRESS);
-            this.Box.Controls.Add(this.AddNTEL);
             this.Box.Controls.Add(this.AddSEX);
             this.Box.Controls.Add(this.AddDATARO);
+            this.Box.Controls.Add(this.cancel);
+            this.Box.Controls.Add(this.AddADDRESS);
+            this.Box.Controls.Add(this.AddNTEL);
             this.Box.Controls.Add(this.AddMESTORO);
             this.Box.Controls.Add(this.AddFIO);
             this.Box.Controls.Add(this.label6);
@@ -152,7 +131,16 @@
             this.Box.Size = new System.Drawing.Size(602, 389);
             this.Box.TabIndex = 6;
             this.Box.TabStop = false;
-            this.Box.Text = "Box";
+            // 
+            // cancel
+            // 
+            this.cancel.Location = new System.Drawing.Point(403, 336);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(82, 26);
+            this.cancel.TabIndex = 14;
+            this.cancel.Text = "Cancel";
+            this.cancel.UseVisualStyleBackColor = true;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
             // AddADDRESS
             // 
@@ -167,20 +155,6 @@
             this.AddNTEL.Name = "AddNTEL";
             this.AddNTEL.Size = new System.Drawing.Size(162, 20);
             this.AddNTEL.TabIndex = 11;
-            // 
-            // AddSEX
-            // 
-            this.AddSEX.Location = new System.Drawing.Point(98, 167);
-            this.AddSEX.Name = "AddSEX";
-            this.AddSEX.Size = new System.Drawing.Size(162, 20);
-            this.AddSEX.TabIndex = 10;
-            // 
-            // AddDATARO
-            // 
-            this.AddDATARO.Location = new System.Drawing.Point(98, 215);
-            this.AddDATARO.Name = "AddDATARO";
-            this.AddDATARO.Size = new System.Drawing.Size(162, 20);
-            this.AddDATARO.TabIndex = 9;
             // 
             // AddMESTORO
             // 
@@ -261,18 +235,35 @@
             this.send.UseVisualStyleBackColor = true;
             this.send.Click += new System.EventHandler(this.send_Click);
             // 
+            // AddDATARO
+            // 
+            this.AddDATARO.Location = new System.Drawing.Point(98, 212);
+            this.AddDATARO.Name = "AddDATARO";
+            this.AddDATARO.Size = new System.Drawing.Size(162, 20);
+            this.AddDATARO.TabIndex = 15;
+            // 
+            // AddSEX
+            // 
+            this.AddSEX.FormattingEnabled = true;
+            this.AddSEX.Items.AddRange(new object[] {
+            "М",
+            "Ж"});
+            this.AddSEX.Location = new System.Drawing.Point(98, 170);
+            this.AddSEX.Name = "AddSEX";
+            this.AddSEX.Size = new System.Drawing.Size(162, 21);
+            this.AddSEX.TabIndex = 16;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(615, 407);
-            this.Controls.Add(this.MainBox);
             this.Controls.Add(this.Box);
+            this.Controls.Add(this.MainBox);
             this.Name = "Form1";
             this.Text = "Таблица людей";
             ((System.ComponentModel.ISupportInitialize)(this.TablPeople)).EndInit();
             this.MainBox.ResumeLayout(false);
-            this.MainBox.PerformLayout();
             this.Box.ResumeLayout(false);
             this.Box.PerformLayout();
             this.ResumeLayout(false);
@@ -289,8 +280,6 @@
         private System.Windows.Forms.GroupBox Box;
         private System.Windows.Forms.TextBox AddADDRESS;
         private System.Windows.Forms.TextBox AddNTEL;
-        private System.Windows.Forms.TextBox AddSEX;
-        private System.Windows.Forms.TextBox AddDATARO;
         private System.Windows.Forms.TextBox AddMESTORO;
         private System.Windows.Forms.TextBox AddFIO;
         private System.Windows.Forms.Label label6;
@@ -300,8 +289,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button send;
-        private System.Windows.Forms.TextBox DeleteID;
-        private System.Windows.Forms.Label DeleteLabel;
+        private System.Windows.Forms.Button cancel;
+        private System.Windows.Forms.ComboBox AddSEX;
+        private System.Windows.Forms.DateTimePicker AddDATARO;
 
     }
 }
