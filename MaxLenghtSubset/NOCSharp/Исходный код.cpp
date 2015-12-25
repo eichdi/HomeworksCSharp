@@ -34,8 +34,8 @@ int main(){
 	}
 	for (int i = 0; i < lenght; i++)
 	{
-		if (!clear[i])
-		{
+		/*if (!clear[i])
+		{*/
 			for (int j = 0; j < i; j++)
 			{
 				if (num[i] > num[j] && l[i] < l[j] + 1)
@@ -43,7 +43,7 @@ int main(){
 					l[i] = l[j] + 1;
 				}
 			}
-		}
+		//}
 	}
 	int result = l[0];
 	for (int i = 1; i < lenght; i++)
