@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
+namespace KursWork
+{
+    
+    //json
     public class AnswerClass
     {
-        private string answer=null;
-        private string jumpTo="";
+        private string answer;
+        private string jumpTo;
         public string Answer
         {
             set
@@ -39,8 +42,8 @@ using System.Threading.Tasks;
 
     public class QuestionClass
     {
-        private AnswerClass[] answers=null;
-        private string question=null;
+        private AnswerClass[] answers;
+        private string question;
         public AnswerClass[] Answers
         {
             set
@@ -60,11 +63,7 @@ using System.Threading.Tasks;
         {
             set
             {
-                List<AnswerClass> tempList;
-                if(answers!=null)
-                    tempList = answers.ToList<AnswerClass>();
-                else
-                    tempList = new List<AnswerClass>();
+                List<AnswerClass> tempList = answers.ToList<AnswerClass>();
                 AnswerClass tempAnswer = new AnswerClass();
                 tempAnswer = value;
                 tempList.Add(tempAnswer);
@@ -100,8 +99,8 @@ using System.Threading.Tasks;
     public class DialogClass
     {
 
-        private string name=null;
-        private QuestionClass[] questions=null;
+        private string name;
+        private QuestionClass[] questions;
         public string Name
         {
             set
@@ -142,20 +141,5 @@ using System.Threading.Tasks;
         //    this.Name = Name;
         //    this.Questions = null;
         //}
-   }
-
-    public class DialogsClass
-    {
-        private DialogClass[] dialogs=null;
-        public DialogClass[] Dialogs
-        {
-            set
-            {
-                dialogs = value;
-            }
-            get
-            {
-                return dialogs;
-            }
-        }
     }
+}

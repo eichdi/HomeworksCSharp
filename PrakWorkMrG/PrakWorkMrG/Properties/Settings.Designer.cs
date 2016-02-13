@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KursWorkV2.Properties
+namespace PrakWorkMrG.Properties
 {
 
 
