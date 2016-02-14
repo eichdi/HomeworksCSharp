@@ -12,24 +12,16 @@ namespace PrakWorkMrG
     class Libary
     {
         private BaseBook book;
-
+        private BaseClient client;
         //TODO
         public bool TakeBook(ClassBook bookArg)
         {
-            if (book.RegistBook(bookArg))
-            {
-                book.GetByBook(bookArg).TakeBook();
-                return true;
-            }
+
             return false;
         }
         public bool GiveBook(ClassBook bookArg, )
         {
-            if (book.RegistBook(bookArg))
-            {
-                book.GetByBook(bookArg).GiveBook();
-                return true;
-            }
+            
             return false;
         }
 

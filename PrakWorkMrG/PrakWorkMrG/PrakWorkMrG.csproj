@@ -48,6 +48,8 @@
     <Compile Include="Libary\BookBase\BaseBook.cs" />
     <Compile Include="Libary\BookBase\Books.cs" />
     <Compile Include="Libary\ClientBase\Client.cs" />
+    <Compile Include="Libary\ClientBase\ClientBase.cs" />
+    <Compile Include="Libary\ClientBase\ClientBook.cs" />
     <Compile Include="Libary\Libary.cs" />
     <Compile Include="Give.cs">
       <SubType>Form</SubType>

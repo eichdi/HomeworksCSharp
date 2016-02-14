@@ -4,124 +4,89 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrakWorkMrG
-{
+
     public class BaseBook
     {
-        private ClassBook[] bbook;
+        private List<Book> bbook;
 
-        public ClassBook[] Book
+        public Book[] Book
         {
             get
             {
-                return bbook;
+                return bbook.ToArray();
             }
         }
 
-
-        public bool AddBook(ProgBook bookArg)
+        public bool AddBook(Book book)
         {
-            try
+            if (book != null && !RegistBook(book))
             {
-                if (!RegistBook(bookArg))
-                {
-                    List<ClassBook> listBook;
-                    if (bookArg != null)
-                        listBook = bbook.ToList();
-                    else
-                    {
-                        listBook = new List<ClassBook>();
-                    }
-                    listBook.Add(bookArg);
-                    this.bbook = listBook.ToArray();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        public bool AddBook(HistoryBook bookArg)
-        {
-            try
-            {
-                if (!RegistBook(bookArg))
-                {
-                    List<ClassBook> listBook;
-                    if (bbook != null)
-                        listBook = bbook.ToList();
-                    else
-                    {
-                        listBook = new List<ClassBook>();
-                    }
-                    listBook.Add(bookArg);
-                    this.bbook = listBook.ToArray();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            catch
-            {
-                return false;
-            }
-        }
 
+                bbook.Add(book);
+                return true;
+            }
+            else
+                return false;
+        }
         //Конструкторы
         public BaseBook()
         {
             bbook = null;
         }
-        public BaseBook(ClassBook[] book)
+        public BaseBook(Book[] book)
         {
-            this.bbook = book;
+            this.bbook = book.ToList();
         }
-        public static BaseBook SBaseBook(ClassBook[] book)
+        public static BaseBook SBaseBook(Book[] book)
         {
             BaseBook bbook = new BaseBook(book);
             return bbook;
         }
         //
 
-        public bool DeleteBook(ClassBook bookArg)
+        public bool DeleteBook(Book bookArg)
         {
-            List<ClassBook> lBook = bbook.ToList();
-            foreach (ClassBook e in lBook)
+            
+            foreach (Book e in bbook)
             {
                 if (bookArg == e)
                 {
-                    lBook.Remove(e);
+                    bbook.Remove(e);
                     return true;
                 }
             }
             return false;
         }
+        public bool LostBook(Book book, int qt = 1)
+        {
+            for (int i = 0; i < qt; i++)
+            {
+                if (!book.LostBook())
+                {
+                    return false;
+                }
 
-        public bool RegistBook(ClassBook bookArg)
+            }
+            return true;
+        }
+        public bool RegistBook(Book bookArg)
         {
             return this.GetByBook(bookArg) != null;
         }
-        public ClassBook GetByID(int id)
+        public Book GetByID(int id)
         {
-            foreach (ClassBook e in bbook)
+            foreach (Book e in bbook)
             {
-                if (e.Book.ID == id)
+                if (e.ID == id)
                 {
                     return e;
                 }
             }
             return null;
         }
-        public ClassBook GetByBook(ClassBook book)
+        public Book GetByBook(Book book)
         {
-            foreach (ClassBook e in bbook)
+            foreach (Book e in bbook)
             {
                 if (e == book)
                 {
@@ -131,4 +96,4 @@ namespace PrakWorkMrG
             return null;
         }
     }
-}
+

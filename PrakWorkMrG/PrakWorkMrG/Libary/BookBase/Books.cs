@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 //Описана книга
-private class Book
+
+private class BookTitle
 {
     private int id;
     private string name;
@@ -25,7 +26,7 @@ private class Book
             return id;
         }
     }
-    public static override bool operator ==(Book a, Book b)
+    public static override bool operator ==(BookTitle a, BookTitle b)
     {
         return a.ID == b.ID;
     }
@@ -36,7 +37,7 @@ private class Book
             return name;
         }
     }
-    public Book(string name, string author, int id)
+    public BookTitle(string name, string author, int id)
     {
         this.name = name;
         this.author = author;
@@ -44,16 +45,26 @@ private class Book
     }
 }
 
-abstract class AbstClassBook
+interface IClassBook
 {
-    void GiveBook();
-    void TakeBook();
+    void Pop(Client client);
+    void Push(Client client);
 }
 
-class ClassBook : Book
+class ClassBook : BookTitle
 {
     private int amount;
 
+    public ClassBook(string name, string author,int id, int amount):
+        base (name, author,id)
+    {
+        this.amount=amount;
+    }
+    public ClassBook(ClassBook book):
+        base(book.Name, book.Author, book.ID)
+    {
+        this.amount = book.amount;
+    }
     public int Amout
     {
         get
@@ -75,6 +86,41 @@ class ClassBook : Book
     }
 }
 
+class Book:ClassBook,IClassBook
+{
+    private int inlib;
+    public int InLib
+    {
+        get
+        {
+            return inlib;
+        }
+    }
+    public Book(string name, string author,int id, int amount, int inlib):
+        base(name, author,id, amount)
+    {
+        this.inlib = inlib;
+    }
+    public bool Pop(Client client)
+    {
+
+        return true;
+    }
+    public bool Push(Client client)
+    {
+        return true;
+    }
+
+
+
+}
+
+
+
+
+
+
+
 //Описан вид книги
 class ProgBook : ClassBook
 {
@@ -86,11 +132,11 @@ class ProgBook : ClassBook
             return langprog;
         }
     }
-    public ProgBook(string langprog, string name, string author, int summ, int id)
-        : base(name, author, summ, id)
-    {
-        this.langprog = langprog;
-    }
+    //public ProgBook(string langprog, string name, string author, int summ, int id)
+    //    : base(name, author, summ, id)
+    //{
+    //    this.langprog = langprog;
+    //}
 }
 class HistoryBook : ClassBook
 {

@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PrakWorkMrG
-{
+
     interface IPerson
     {
         
@@ -49,12 +48,31 @@ namespace PrakWorkMrG
     }
     class Client:Person
     {
-        private BaseBook bBook;
+        List<ClientBook> cbook;
+        public ClientBook[] Book
+        {
+            get
+            {
+                return cbook.ToArray();
+            }
+        }
         public Client (string name, string surname, int bornyear, int id)
             : base(name, surname, bornyear, id)
         {
-            bBook = new BaseBook();
+            cbook = new List<ClientBook>();
+        }
+        public bool AddBook(ClassBook book,int qt)
+        {
+            if (book != null && qt>0 && book.Amout>=qt)
+            {
+                cbook.Add(new ClientBook(book,qt));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
     }
-}
+
