@@ -33,8 +33,9 @@ using System.Threading.Tasks;
         {
             bbook = null;
         }
-        public BaseBook(Book[] book)
+        public BaseBook(Book[] book, int id)
         {
+
             this.bbook = book.ToList();
         }
         public static BaseBook SBaseBook(Book[] book)
@@ -85,6 +86,17 @@ using System.Threading.Tasks;
             return null;
         }
         public Book GetByBook(Book book)
+        {
+            foreach (Book e in bbook)
+            {
+                if (e == book)
+                {
+                    return e;
+                }
+            }
+            return null;
+        }
+        public Book GetByBook(ClassBook book)
         {
             foreach (Book e in bbook)
             {

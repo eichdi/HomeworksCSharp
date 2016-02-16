@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 private class BookTitle
 {
     private int id;
+    private static List<int> idRegist= new List<int>();
     private string name;
     private string author;
 
@@ -39,9 +40,18 @@ private class BookTitle
     }
     public BookTitle(string name, string author, int id)
     {
-        this.name = name;
-        this.author = author;
-        this.id = id;
+        if (!idRegist.Contains(id))
+        {
+            this.name = name;
+            this.author = author;
+            this.id = id;
+            idRegist.Add(id);
+        }
+        else
+        {
+            throw new Exception();
+        }
+        
     }
 }
 
@@ -101,16 +111,41 @@ class Book:ClassBook,IClassBook
     {
         this.inlib = inlib;
     }
-    public bool Pop(Client client)
+    public bool Pop(int qt)
     {
-
-        return true;
+        if (inlib >= qt)
+        {
+            inlib -= qt;
+            return true;
+        }
+        return false;
     }
-    public bool Push(Client client)
+    public bool Push(int qt)
     {
-        return true;
+        if (qt > Amout - inlib)
+        {
+            inlib += qt;
+            return true;
+        }
+        return false;
     }
-
+    public bool GiveBook(BaseBook bbook, Client client, int qt)
+    {
+        return client.AddBook(bbook, this, qt);
+    }
+    public bool TakeBook(BaseBook bbook, Client client, int qt)
+    {
+        ClientBook book = client.GetClientBook(this);
+        if (book != null)
+        {
+            book.ReceivBook(bbook, qt);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 
 }

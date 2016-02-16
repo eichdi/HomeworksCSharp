@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
         public bool LostBook(int qtbook)
         {
-            if (qtbook < this.qtBook)
+            if (qtbook < this.qtBook && received==false)
             {
                 this.qtLostBook =  qtbook;
                 lost = true;
@@ -27,20 +27,24 @@ using System.Threading.Tasks;
                 return false;
             }
         }
-        public bool FoundLostBook(int qtbook)
+        public bool FoundLostBook(BaseBook bbook, int qtbook)
         {
             if(lost == true)
             {
                 if (qtLostBook == qtbook)
                 {
-                    lost = false;
-                    received = true;
-                    this.endTime = DateTime.Today;
-                    //TODO
+                    
+                    Book temp = bbook.GetByBook(this);
+                    if (temp.Pop(qtbook))
+                    {
+                        lost = false;
+                        received = true;
+                        this.endTime = DateTime.Today;
+                        return true;
+                    }
+                    else
+                        return false;
 
-
-
-                    return true;
                 }
                 else
                 {
@@ -61,13 +65,18 @@ using System.Threading.Tasks;
             }
         }
 
-        public bool ReceivBook()
+        public bool ReceivBook(BaseBook bbook, int qtBook)
         {
-            if (lost == false)
+            if (lost == false && qtBook==this.qtBook)
             {
+                Book inLibBook = bbook.GetByBook(this);
+                
+                if (inLibBook != null && inLibBook.Push(qtBook))
+                {
+                    
+                }
                 received = true;
                 endTime = DateTime.Today;
-                ///TODO
                 return true;
             }
             else
@@ -83,6 +92,7 @@ using System.Threading.Tasks;
             lost = false;
             received = false;
         }
+
 
     }
 

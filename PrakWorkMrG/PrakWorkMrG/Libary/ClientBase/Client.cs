@@ -15,6 +15,7 @@ using System.Threading.Tasks;
         private string name;
         private string surname;
         private int bornyear;
+        private static List<int> registId = new List<int>();
         private int id;
         public string Name
         {
@@ -37,13 +38,22 @@ using System.Threading.Tasks;
                 return bornyear;
             }
         }
-
+        
         public Person(string name, string surname, int bornyear, int id)
         {
-            this.name = name;
-            this.surname = surname;
-            this.bornyear = bornyear;
-            this.id = id;
+            if (!registId.Contains(id))
+            {
+                this.name = name;
+                this.surname = surname;
+                this.bornyear = bornyear;
+                this.id = id;
+                registId.Add(id);
+            }
+            else
+            {
+                throw new Exception();
+            }
+            
         }
     }
     class Client:Person
@@ -56,17 +66,34 @@ using System.Threading.Tasks;
                 return cbook.ToArray();
             }
         }
+        public ClientBook GetClientBook(ClassBook book)
+        {
+            foreach (ClientBook e in cbook)
+            {
+                if (e == book)
+                {
+                    return e;
+                }
+            }
+            return null;
+        }
         public Client (string name, string surname, int bornyear, int id)
             : base(name, surname, bornyear, id)
         {
             cbook = new List<ClientBook>();
         }
-        public bool AddBook(ClassBook book,int qt)
+        public bool AddBook(BaseBook bbook, ClassBook book,int qt)
         {
-            if (book != null && qt>0 && book.Amout>=qt)
+            if (book != null && qt>0)
             {
-                cbook.Add(new ClientBook(book,qt));
-                return true;
+                Book inBaseBook = bbook.GetByBook(book);
+                if (inBaseBook != null && inBaseBook.Pop(qt))
+                {
+                    cbook.Add(new ClientBook(book, qt));
+                    return true;
+
+                }
+                return false;
             }
             else
             {
