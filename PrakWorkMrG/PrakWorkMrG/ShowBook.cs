@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PrakWorkMrG
 {
-    public partial class Main : Form
+    public partial class ShowBook : Form
     {
-        public Main()
+        public ShowBook()
         {
             InitializeComponent();
         }

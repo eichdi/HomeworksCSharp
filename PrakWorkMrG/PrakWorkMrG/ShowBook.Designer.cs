@@ -1,6 +1,6 @@
 ﻿namespace PrakWorkMrG
 {
-    partial class Main
+    partial class ShowBook
     {
         /// <summary>
         /// Требуется переменная конструктора.

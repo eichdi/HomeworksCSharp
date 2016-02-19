@@ -20,7 +20,7 @@ namespace PrakWorkMrG
             Give.ActiveForm.Visible = false;
             new Take();
             Take.ActiveForm.Visible = false;
-            Application.Run(new Main());
+            Application.Run(new ShowBook());
         }
     }
 }

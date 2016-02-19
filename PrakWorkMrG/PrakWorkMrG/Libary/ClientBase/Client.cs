@@ -58,7 +58,7 @@ using System.Threading.Tasks;
     }
     class Client:Person
     {
-        List<ClientBook> cbook;
+        private List<ClientBook> cbook;
         public ClientBook[] Book
         {
             get

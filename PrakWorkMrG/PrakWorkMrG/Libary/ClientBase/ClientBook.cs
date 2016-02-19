@@ -14,6 +14,35 @@ using System.Threading.Tasks;
         private bool lost;
         private bool received;
 
+        public DateTime StartTime
+        {
+            get
+            {
+                return startTime;
+            }
+        }
+        public bool Received
+        {
+            get
+            {
+                return received;
+            }
+        }
+        //public bool Lost
+        //{
+        //    get
+        //    {
+        //        return lost;
+        //    }
+        //}
+        public DateTime EndTime
+        {
+            get
+            {
+                return endTime;
+            }
+        }
+
         public bool LostBook(int qtbook)
         {
             if (qtbook < this.qtBook && received==false)

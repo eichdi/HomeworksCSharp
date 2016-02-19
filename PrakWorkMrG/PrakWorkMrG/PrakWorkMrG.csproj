@@ -45,6 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientBookForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientBookForm.Designer.cs">
+      <DependentUpon>ClientBookForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientForm.Designer.cs">
+      <DependentUpon>ClientForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Libary\BookBase\BaseBook.cs" />
     <Compile Include="Libary\BookBase\Books.cs" />
     <Compile Include="Libary\ClientBase\Client.cs" />
@@ -71,6 +83,12 @@
     <Compile Include="Take.Designer.cs">
       <DependentUpon>Take.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ClientBookForm.resx">
+      <DependentUpon>ClientBookForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientForm.resx">
+      <DependentUpon>ClientForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Give.resx">
       <DependentUpon>Give.cs</DependentUpon>
     </EmbeddedResource>
